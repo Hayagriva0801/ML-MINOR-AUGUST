@@ -1,0 +1,92 @@
+import pygame
+import time
+import sys
+from pygame.locals import*
+pygame.init()
+def CountDownTimer():
+    print("Count Down Timer: ")
+    print("Note: Press r to reset. \nPress s to stop. \nPress p to pause. \nType re after pausing to resume. ")
+    print("Insert the values to start countdown: ")
+    Hours = int(input("Enter the time in hours: "))
+    Minutes = int(input("Enter the time in minutes: "))
+    Seconds = int(input("Enter the time in seconds: "))
+    def textsupport(text):
+        text = font.render(text, True, color)
+        screen.blit(text, (300, 200))
+        pygame.display.flip()
+        screen.fill((20,20,20))
+    screen_size = (800,600)
+    screen = pygame.display.set_mode(screen_size)
+    pygame.display.set_caption("Count Down Timer")
+    font = pygame.font.SysFont("Times New Roman", 30)
+    color = (220, 20, 60)
+    time_remaining = (Hours*3600) + (Minutes * 60) + Seconds
+    time_remaining_duplicate = time_remaining
+    a  = False
+    while not a:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                a = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    time_remaining = time_remaining_duplicate
+                    textsupport("The time is reset.")
+                    time.sleep(1)
+                    textsupport("Countdown starts in 3")
+                    time.sleep(1)
+                    textsupport("Countdown starts in 2")
+                    time.sleep(1)
+                    textsupport("Countdown starts in 1")
+                    time.sleep(1)
+                    textsupport("Countdown starts in 0")
+                    time.sleep(0.5)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_s:
+                    textsupport("Timer stopped")
+                    Total_Hours = time_remaining//3600
+                    Total_Minutes = time_remaining//60 - (Total_Hours*60)
+                    Total_Seconds = time_remaining - (Total_Minutes * 60) - (Total_Hours*3600)
+                    pygame.time.wait(3000)
+                    textsupport("The timer is stopped at: "+str(Total_Hours)+":"+str(Total_Minutes)+":"+str(Total_Seconds))
+                    pygame.time.wait(3000)
+                    a = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    textsupport("The timer is paused. Press e to resume")
+                    b = 0
+                    while b == 0:
+                        textsupport("Type re in box to resume: ")
+                        b = input("Type re in box below code to resume: ")
+                        if b == "re":
+                            b = 1
+                            print(time_remaining)
+                        else:
+                            textsupport("You typed wrong. Retype re in the box")
+        bg = pygame.image.load(r"C:\Users\Lenovo\Dropbox\PC\Desktop\Teachnook_Minor Project\Time.jpg")
+        screen.blit(bg, (0,0))
+        
+        icon = pygame.image.load(r"C:\Users\Lenovo\Dropbox\PC\Desktop\Teachnook_Minor Project\Countdown_Timer1.jpg")
+        pygame.display.set_icon(icon)
+        top = pygame.image.load(r"C:\Users\Lenovo\Dropbox\PC\Desktop\Teachnook_Minor Project\Countdown_Timer1.jpg")
+        screen.blit(top,(250, 10))
+        
+        reset = pygame.image.load(r"C:\Users\Lenovo\Dropbox\PC\Desktop\Teachnook_Minor Project\Reset.jpg")
+        pygame.display.set_icon(reset)
+        bottom = pygame.image.load(r"C:\Users\Lenovo\Dropbox\PC\Desktop\Teachnook_Minor Project\Reset.jpg")
+        screen.blit(bottom, (150, 400))
+        
+        pygame.display.update()
+        Total_Hours = time_remaining//3600
+        Total_Minutes = time_remaining//60 - (Total_Hours*60)
+        Total_Seconds = time_remaining - (Total_Minutes * 60) - (Total_Hours*3600)
+        time_remaining -= 1
+        if time_remaining > -2 and a == False:
+            textsupport("Time left: "+str(Total_Hours)+":"+str(Total_Minutes)+":"+str(Total_Seconds))
+            time.sleep(1)
+        else:
+            textsupport("Time Over!!")
+            pygame.time.wait(2000)
+            a = True
+CountDownTimer()
+pygame.quit()
+sys.exit()
